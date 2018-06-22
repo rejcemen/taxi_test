@@ -18,6 +18,12 @@ class TaxiOrderForm:
     def clear_from_field(self):
         self.browser.find_by_css('span[class="input__clear input__clear_visibility_visible"]').click()
 
+    def use_location(self):
+        self.browser.find_by_css('span[class="input__location"]').click()
+
+    def find_swap_button(self):
+        return self.browser.find_by_css('button[class="geo-group__swap js-swap-address"]')
+
     def fill_from_field(self, fromAddress):
         self.browser.fill('gfrom', fromAddress)
         self.select_list_item_in_popup(0)
@@ -32,8 +38,22 @@ class TaxiOrderForm:
     def find_to_field(self):
         return self.browser.find_by_name('gto')
 
+    def fill_phone_number_field(self, phone_number):
+        self.browser.fill('phone', phone_number)
+
+    def find_order_requirements_button(self):
+        return self.browser.find_by_css('button[class*="button_preset_requirements"]')
+
+    def select_order_requirements(self, requirements):
+        self.find_order_requirements_button().click()
+        for req_id in requirements:
+            self.browser.find_by_id(req_id).check()
+
     def find_demo_order_button(self):
         return self.browser.find_by_css('button[class*="button_action_demo"]')
 
     def demo_progress_title(self):
         return self.browser.find_by_css('div[class="demo-progress__title"]')
+
+    def find_cancel_button(self):
+        return self.browser.find_by_css('button[class*="js-orderBreak"]')
